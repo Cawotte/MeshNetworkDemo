@@ -13,8 +13,10 @@ import java.awt.event.MouseMotionListener;
 public class Main extends JFrame implements MouseListener, MouseMotionListener {
 
     // Define constants
-    public static final int CANVAS_WIDTH  = 960;
-    public static final int CANVAS_HEIGHT = 600;
+    static final int CANVAS_WIDTH  = 960;
+    static final int CANVAS_HEIGHT = 600;
+    static final boolean DRAW_LINKS = true;
+    static final int AVERAGE_DIST_BETWEEN_NODES = 60;
 
     private GraphCanvas canvas;
     private MeshNetwork meshNetwork;
@@ -23,7 +25,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener {
     public Main() {
 
         //DATA
-        this.meshNetwork = new MeshNetwork(CANVAS_WIDTH, CANVAS_HEIGHT, 60);
+        this.meshNetwork = new MeshNetwork(CANVAS_WIDTH, CANVAS_HEIGHT, AVERAGE_DIST_BETWEEN_NODES);
 
         this.meshNetworkDisruptor = new MeshNetworkDisruptor(meshNetwork);
         this.meshNetworkDisruptor.notifyObserver = new Runnable() {
@@ -34,7 +36,9 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener {
         };
         this.meshNetworkDisruptor.startRecurrentDisabling();
 
-        canvas = new GraphCanvas(meshNetwork, CANVAS_WIDTH, CANVAS_HEIGHT);    // Construct the drawing canvas
+        canvas = new GraphCanvas(meshNetwork, CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas.drawLinks = DRAW_LINKS;
+        // Construct the drawing canvas
         canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 
         // Set the Test.Drawing JPanel as the JFrame's content-pane

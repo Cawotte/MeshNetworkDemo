@@ -9,6 +9,8 @@ import java.awt.*;
 import java.util.ArrayList;
 public class GraphCanvas extends JPanel {
 
+    public boolean drawLinks = true;
+
     private final int nodeRadius = 10;
     private final Color colorPath = Color.blue;
     private final Color colorGraph = Color.gray;
@@ -61,7 +63,8 @@ public class GraphCanvas extends JPanel {
         //Draw relay
         drawCircle(g, meshNetwork.relay.pos, nodeRadius, Color.red);
 
-        //drawLink(g);
+        if (drawLinks)
+            drawLink(g);
     }
 
     private Color getColorDependingOnDistance(float distance) {
@@ -83,9 +86,6 @@ public class GraphCanvas extends JPanel {
             for (Node neighbor : node.neighbors) {
                 if (neighbor.isEnabled && node.isEnabled) {
                     drawLine(g, node.pos, neighbor.pos, colorGraph);
-                }
-                else {
-                    drawLine(g, node.pos, neighbor.pos, colorDisabledGraph);
                 }
             }
         }
